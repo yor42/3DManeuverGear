@@ -33,7 +33,7 @@ public class EntityLivingHandler {
         }
         EntityPlayer player = (EntityPlayer) event.getEntity();
         ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-        if(boots != null && boots.getItem() == ItemRegistry.getInstance().itemFallBoots) {
+        if(boots.getItem() == ItemRegistry.getInstance().itemFallBoots) {
             event.setAmount((1.0F-ConfigurationHandler.getInstance().bootFallDamageReduction)*event.getAmount());
         }
 
@@ -48,8 +48,8 @@ public class EntityLivingHandler {
         if(!(event.getEntity() instanceof EntityWither)) {
             return;
         }
-        Entity killer = event.getSource().getSourceOfDamage();
-        if(event.isRecentlyHit() && killer != null && killer instanceof EntityPlayer) {
+        Entity killer = event.getSource().getImmediateSource();
+        if(event.isRecentlyHit() && killer instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) killer;
             ItemStack left = player.getHeldItem(EnumHand.MAIN_HAND);
             ItemStack right = player.getHeldItem(EnumHand.OFF_HAND);

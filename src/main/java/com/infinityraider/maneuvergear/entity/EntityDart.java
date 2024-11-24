@@ -55,9 +55,9 @@ public class EntityDart extends EntityThrowable implements IEntityAdditionalSpaw
         //render the entity even if off screen
         this.ignoreFrustumCheck = true;
         Vec3d direction = player.getLookVec();
-        double v_X = direction.xCoord*INITIAL_VELOCITY/20.0F;
-        double v_Y = direction.yCoord*INITIAL_VELOCITY/20.0F;
-        double v_Z = direction.zCoord*INITIAL_VELOCITY/20.0F;
+        double v_X = direction.x*INITIAL_VELOCITY/20.0F;
+        double v_Y = direction.y*INITIAL_VELOCITY/20.0F;
+        double v_Z = direction.z*INITIAL_VELOCITY/20.0F;
         setVelocity(v_X, v_Y, v_Z);
     }
 
@@ -67,7 +67,7 @@ public class EntityDart extends EntityThrowable implements IEntityAdditionalSpaw
         ManeuverGear.instance.getLogger().debug("impact " + (this.getEntityWorld().isRemote ? "client side" : "server side"));
         double yaw = -Math.atan2(motionZ, motionX);
         double pitch = Math.asin(motionY / Math.sqrt(motionX * motionX + motionZ * motionZ));
-        DartHandler.instance.onDartAnchored(this, impact.hitVec.xCoord, impact.hitVec.yCoord, impact.hitVec.zCoord, (float) yaw, (float) pitch);
+        DartHandler.instance.onDartAnchored(this, impact.hitVec.x, impact.hitVec.y, impact.hitVec.z, (float) yaw, (float) pitch);
     }
 
     public void setVelocity(double v_X, double v_Y, double v_Z) {

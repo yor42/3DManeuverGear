@@ -47,7 +47,7 @@ public interface IProxy extends IProxyBase {
         this.registerEventHandler(EntityLivingHandler.getInstance());
     }
 
-    @Override
+
     default void initConfiguration(FMLPreInitializationEvent event) {
         ConfigurationHandler.getInstance().init(event);
     }
@@ -56,8 +56,5 @@ public interface IProxy extends IProxyBase {
     default void activateRequiredModules() {
         ModuleDualWield.getInstance().activate();
     }
-
-    @Override
-    default void registerSounds() {}
 
 }

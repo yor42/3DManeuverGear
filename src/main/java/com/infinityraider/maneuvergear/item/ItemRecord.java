@@ -1,8 +1,8 @@
 package com.infinityraider.maneuvergear.item;
 
+import com.infinityraider.maneuvergear.Tags;
 import com.infinityraider.maneuvergear.ManeuverGear;
 import com.infinityraider.maneuvergear.reference.Names;
-import com.infinityraider.maneuvergear.reference.Reference;
 import com.infinityraider.infinitylib.item.IItemWithModel;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -37,20 +37,20 @@ public class ItemRecord extends net.minecraft.item.ItemRecord implements IItemWi
         return true;
     }
 
-    @Override
+    //@Override
     public ResourceLocation getRecordResource(String name) {
-        return new ResourceLocation(Reference.MOD_ID.toLowerCase(), name);
+        return new ResourceLocation(Tags.MOD_ID.toLowerCase(), name);
     }
 
     @Override
     public List<Tuple<Integer, ModelResourceLocation>> getModelDefinitions() {
         List<Tuple<Integer, ModelResourceLocation>> list = new ArrayList<>();
-        list.add(new Tuple<>(0, new ModelResourceLocation(Reference.MOD_ID.toLowerCase() + ":record", "inventory")));
+        list.add(new Tuple<>(0, new ModelResourceLocation(Tags.MOD_ID.toLowerCase() + ":record", "inventory")));
         return list;
     }
 
     private static SoundEvent registerSoundAndCreateRecord(String name) {
-        ResourceLocation loc = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "records." + name);
+        ResourceLocation loc = new ResourceLocation(Tags.MOD_ID.toLowerCase(), "records." + name);
         SoundEvent sound = new SoundEvent(loc);
         for(Method method : SoundEvent.class.getDeclaredMethods()) {
             if(Modifier.isStatic(method.getModifiers()) && method.getParameterCount() > 0) {

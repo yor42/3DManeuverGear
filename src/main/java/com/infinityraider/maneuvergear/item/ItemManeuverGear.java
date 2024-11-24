@@ -3,11 +3,11 @@ package com.infinityraider.maneuvergear.item;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.api.render.IRenderBauble;
+import com.infinityraider.maneuvergear.Tags;
 import com.infinityraider.maneuvergear.handler.DartHandler;
 import com.infinityraider.maneuvergear.network.MessageEquipManeuverGear;
 import com.infinityraider.maneuvergear.physics.PhysicsEngine;
 import com.infinityraider.maneuvergear.reference.Names;
-import com.infinityraider.maneuvergear.reference.Reference;
 import com.infinityraider.maneuvergear.render.RenderManeuverGear;
 import com.infinityraider.infinitylib.item.IItemWithModel;
 import com.infinityraider.infinitylib.item.ItemBase;
@@ -15,6 +15,7 @@ import com.infinityraider.infinitylib.utility.IRecipeRegister;
 import com.infinityraider.infinitylib.utility.TranslationHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -175,14 +177,15 @@ public class ItemManeuverGear extends ItemBase implements IBauble, IRecipeRegist
     /** This handles the movement of the player */
     @Override
     public void onWornTick(ItemStack stack, EntityLivingBase entity) {
-        if(entity==null || !(entity instanceof EntityPlayer)) {
+        if(!(entity instanceof EntityPlayer)) {
             return;
         }
         EntityPlayer player = (EntityPlayer) entity;
         boolean remote = player.getEntityWorld().isRemote;
         if(remote && stack!=null && stack.getItem()==this) {
-            boolean b = DartHandler.instance.isWearingGear(player);
-            if(DartHandler.instance.isWearingGear(player) && (DartHandler.instance.getLeftDart(player)!=null || DartHandler.instance.getRightDart(player)!=null)) {
+            boolean isWearingGear = DartHandler.instance.isWearingGear(player);
+            boolean hasDart = DartHandler.instance.getLeftDart(player)!=null || DartHandler.instance.getRightDart(player)!=null;
+            if(isWearingGear && hasDart) {
                 PhysicsEngine engine = DartHandler.instance.getPhysicsEngine(player);
                 engine.updateTick();
             }
@@ -191,7 +194,7 @@ public class ItemManeuverGear extends ItemBase implements IBauble, IRecipeRegist
 
     @Override
     public void onEquipped(ItemStack stack, EntityLivingBase entity) {
-        if(entity==null || !(entity instanceof EntityPlayer)) {
+        if(!(entity instanceof EntityPlayer)) {
             return;
         }
         EntityPlayer player = (EntityPlayer) entity;
@@ -202,7 +205,7 @@ public class ItemManeuverGear extends ItemBase implements IBauble, IRecipeRegist
 
     @Override
     public void onUnequipped(ItemStack stack, EntityLivingBase entity) {
-        if(entity==null || !(entity instanceof EntityPlayer)) {
+        if(!(entity instanceof EntityPlayer)) {
             return;
         }
         EntityPlayer player = (EntityPlayer) entity;
@@ -233,37 +236,34 @@ public class ItemManeuverGear extends ItemBase implements IBauble, IRecipeRegist
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean flag) {
-        if(stack != null) {
-            list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.belt"));
-            list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.leftBlades")+": "+this.getBladeCount(stack, true)+"/"+MAX_HOLSTERED_BLADES);
-            list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.rightBlades")+": "+this.getBladeCount(stack, false)+"/"+MAX_HOLSTERED_BLADES);
-        }
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> list, ITooltipFlag flagIn) {
+        list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.belt"));
+        list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.leftBlades")+": "+this.getBladeCount(stack, true)+"/"+MAX_HOLSTERED_BLADES);
+        list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.rightBlades")+": "+this.getBladeCount(stack, false)+"/"+MAX_HOLSTERED_BLADES);
     }
 
     @Override
     public void registerRecipes() {
-        this.getRecipes().forEach(GameRegistry::addRecipe);
+        //this.getRecipes().forEach(GameRegistry::addRecipe);
     }
 
-    public List<IRecipe> getRecipes() {
-        List<IRecipe> list = new ArrayList<>();
-        list.add(new ShapedOreRecipe(this, "cnc", "lgl", "hbh",
-                'c', ItemResource.EnumSubItems.CABLE_COIL.getStack(),
-                'n', ItemResource.EnumSubItems.GAS_NOZZLE.getStack(),
-                'l', ItemResource.EnumSubItems.GRAPPLE_LAUNCHER.getStack(),
-                'g', ItemResource.EnumSubItems.GIRDLE.getStack(),
-                'h', ItemResource.EnumSubItems.BLADE_HOLSTER_ASSEMBLY.getStack(),
-                'b', ItemResource.EnumSubItems.BELT.getStack()));
-        return list;
-    }
+//    public List<IRecipe> getRecipes() {
+//        List<IRecipe> list = new ArrayList<>();
+//        list.add(new ShapedOreRecipe(this, "cnc", "lgl", "hbh",
+//                'c', ItemResource.EnumSubItems.CABLE_COIL.getStack(),
+//                'n', ItemResource.EnumSubItems.GAS_NOZZLE.getStack(),
+//                'l', ItemResource.EnumSubItems.GRAPPLE_LAUNCHER.getStack(),
+//                'g', ItemResource.EnumSubItems.GIRDLE.getStack(),
+//                'h', ItemResource.EnumSubItems.BLADE_HOLSTER_ASSEMBLY.getStack(),
+//                'b', ItemResource.EnumSubItems.BELT.getStack()));
+//        return list;
+//    }
 
     @Override
     @SideOnly(Side.CLIENT)
     public List<Tuple<Integer, ModelResourceLocation>> getModelDefinitions() {
         List<Tuple<Integer, ModelResourceLocation>> list = new ArrayList<>();
-        list.add(new Tuple<>(0, new ModelResourceLocation(Reference.MOD_ID.toLowerCase() + ":maneuver_gear", "inventory")));
+        list.add(new Tuple<>(0, new ModelResourceLocation(Tags.MOD_ID.toLowerCase() + ":maneuver_gear", "inventory")));
         return list;
     }
 }

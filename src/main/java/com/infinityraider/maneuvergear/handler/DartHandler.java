@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /** Handles all interaction between the player and his two darts */
+@Mod.EventBusSubscriber
 public class DartHandler {
     private static final PhysicsEngine DUMMY = new PhysicsEngineDummy();
     public static final DartHandler instance = new DartHandler();
@@ -152,7 +154,7 @@ public class DartHandler {
 
     private boolean checkGear(EntityPlayer player) {
         ItemStack belt = BaublesWrapper.getInstance().getBauble(player, BaublesWrapper.BELT_SLOT);
-        return (belt!=null) && (belt.getItem() instanceof ItemManeuverGear);
+        return belt.getItem() instanceof ItemManeuverGear;
     }
 
     public void equipGear(EntityPlayer player) {

@@ -20,7 +20,7 @@ public class ItemRegistry {
     public Item itemFallBoots;
     public Item itemRecord;
 
-    private List<Item> items;
+    private final List<Item> items;
 
     private ItemRegistry() {
         this.items = new ArrayList<>();

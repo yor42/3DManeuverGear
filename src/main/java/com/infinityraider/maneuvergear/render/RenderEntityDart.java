@@ -3,9 +3,9 @@ package com.infinityraider.maneuvergear.render;
 import com.infinityraider.maneuvergear.entity.EntityDart;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -51,7 +51,7 @@ public class RenderEntityDart extends Render<EntityDart> {
         GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        BufferBuilder buffer = tessellator.getBuffer();
         int i = 0;
         float f = 0.0F;
         float f1 = 0.5F;
@@ -117,9 +117,9 @@ public class RenderEntityDart extends Render<EntityDart> {
         vec3d = vec3d.rotatePitch(pitch);
         vec3d = vec3d.rotateYaw(yaw);
         //find the player's position, interpolating based on his movement
-        double x_P = player.prevPosX + (player.posX - player.prevPosX) * (double) partialTicks + vec3d.xCoord;
-        double y_P = player.prevPosY + (player.posY - player.prevPosY) * (double) partialTicks + vec3d.yCoord;
-        double z_P = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) partialTicks + vec3d.zCoord;
+        double x_P = player.prevPosX + (player.posX - player.prevPosX) * (double) partialTicks + vec3d.z;
+        double y_P = player.prevPosY + (player.posY - player.prevPosY) * (double) partialTicks + vec3d.z;
+        double z_P = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) partialTicks + vec3d.z;
         //interpolate the entity's position based on its movement
         double x_D = dart.prevPosX + (dart.posX - dart.prevPosX) * (double) partialTicks;
         double y_D = dart.prevPosY + (dart.posY - dart.prevPosY) * (double) partialTicks + 0.25D;
@@ -159,7 +159,7 @@ public class RenderEntityDart extends Render<EntityDart> {
     }
 
     private void renderWire(Tessellator tessellator, double x, double y, double z, double X, double Y, double Z, double A) {
-        VertexBuffer buffer = tessellator.getBuffer();
+        BufferBuilder buffer = tessellator.getBuffer();
         GlStateManager.disableTexture2D();
         GlStateManager.disableLighting();
         buffer.begin(3, DefaultVertexFormats.POSITION_COLOR);

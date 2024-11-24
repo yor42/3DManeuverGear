@@ -1,12 +1,12 @@
 package com.infinityraider.maneuvergear.proxy;
 
+import com.infinityraider.maneuvergear.Tags;
 import com.infinityraider.maneuvergear.handler.ConfigurationHandler;
 import com.infinityraider.maneuvergear.handler.KeyInputHandler;
 import com.infinityraider.maneuvergear.physics.PhysicsEngine;
 import com.infinityraider.maneuvergear.physics.PhysicsEngineClientLocal;
 import com.infinityraider.maneuvergear.physics.PhysicsEngineDummy;
 import com.infinityraider.maneuvergear.reference.Names;
-import com.infinityraider.maneuvergear.reference.Reference;
 import com.infinityraider.infinitylib.proxy.base.IClientProxyBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -23,8 +23,8 @@ import org.lwjgl.input.Keyboard;
 @SuppressWarnings("unused")
 @SideOnly(Side.CLIENT)
 public class ClientProxy implements IClientProxyBase, IProxy {
-    public static KeyBinding retractLeft = new KeyBinding(Reference.MOD_ID+"."+Names.Objects.KEY+"."+Names.Objects.RETRACT+Names.Objects.LEFT, Keyboard.KEY_Z, "key.categories.movement");
-    public static KeyBinding retractRight = new KeyBinding(Reference.MOD_ID+"."+Names.Objects.KEY+"."+Names.Objects.RETRACT+Names.Objects.RIGHT, Keyboard.KEY_X, "key.categories.movement");
+    public static KeyBinding retractLeft = new KeyBinding(Tags.MOD_ID +"."+Names.Objects.KEY+"."+Names.Objects.RETRACT+Names.Objects.LEFT, Keyboard.KEY_Z, "key.categories.movement");
+    public static KeyBinding retractRight = new KeyBinding(Tags.MOD_ID +"."+Names.Objects.KEY+"."+Names.Objects.RETRACT+Names.Objects.RIGHT, Keyboard.KEY_X, "key.categories.movement");
 
     @Override
     public PhysicsEngine createPhysicsEngine(EntityPlayer player) {
@@ -55,7 +55,7 @@ public class ClientProxy implements IClientProxyBase, IProxy {
         Vec3d lookVec = player.getLook(2);
         int nr = 10;
         for(int i=0;i<nr;i++) {
-            Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), x, y, z, -(lookVec.xCoord * i) / (0.0F + nr), -(lookVec.yCoord * i) / (0.0F + nr), -(lookVec.zCoord * i) / (0.0F + nr));
+            Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), x, y, z, -(lookVec.x * i) / (0.0F + nr), -(lookVec.y * i) / (0.0F + nr), -(lookVec.z * i) / (0.0F + nr));
         }
     }
 
@@ -63,12 +63,6 @@ public class ClientProxy implements IClientProxyBase, IProxy {
     public void initConfiguration(FMLPreInitializationEvent event) {
         IProxy.super.initConfiguration(event);
         ConfigurationHandler.getInstance().initClientConfigs(event);
-    }
-
-    @Override
-    public void registerEventHandlers() {
-        IProxy.super.registerEventHandlers();
-        this.registerEventHandler(KeyInputHandler.getInstance());
     }
 
     @Override

@@ -1,14 +1,15 @@
 package com.infinityraider.maneuvergear.item;
 
+import com.infinityraider.maneuvergear.Tags;
 import com.infinityraider.maneuvergear.handler.DartHandler;
 import com.infinityraider.maneuvergear.init.ItemRegistry;
 import com.infinityraider.maneuvergear.reference.Names;
-import com.infinityraider.maneuvergear.reference.Reference;
 import com.infinityraider.infinitylib.item.IItemWithModel;
 import com.infinityraider.infinitylib.item.ItemBase;
 import com.infinityraider.infinitylib.utility.IRecipeRegister;
 import com.infinityraider.infinitylib.utility.TranslationHelper;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +44,7 @@ public class ItemResource extends ItemBase implements IRecipeRegister, IItemWith
         if(world.isRemote) {
             return new ActionResult<>(EnumActionResult.PASS, stack);
         }
-        if(stack == null || stack.getItem() != this) {
+        if(stack.getItem() != this) {
             return new ActionResult<>(EnumActionResult.PASS, stack);
         }
         if(stack.getItemDamage() == EnumSubItems.SWORD_BLADE.ordinal()) {
@@ -68,22 +70,25 @@ public class ItemResource extends ItemBase implements IRecipeRegister, IItemWith
     }
 
     @Override
-    public String getUnlocalizedName(ItemStack stack) {
-        return super.getUnlocalizedName(stack)+"."+EnumSubItems.getNameForIndex(stack.getItemDamage());
+    public String getTranslationKey(ItemStack stack) {
+        return super.getTranslationKey(stack)+"."+EnumSubItems.getNameForIndex(stack.getItemDamage());
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
+        if(!this.isInCreativeTab(tab)){
+            return;
+        }
         for(int i=0;i<EnumSubItems.values().length;i++) {
-            list.add(new ItemStack(item, 1, i));
+            list.add(new ItemStack(this, 1, i));
         }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean flag) {
-        if(stack != null && stack.getItemDamage() == EnumSubItems.SWORD_BLADE.ordinal()) {
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> list, ITooltipFlag flag) {
+        if(stack.getItemDamage() == EnumSubItems.SWORD_BLADE.ordinal()) {
             list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.swordBladeRight"));
             list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.swordBladeLeft"));
         }
@@ -91,44 +96,44 @@ public class ItemResource extends ItemBase implements IRecipeRegister, IItemWith
 
     @Override
     public void registerRecipes() {
-        this.getRecipes().forEach(GameRegistry::addRecipe);
+        //this.getRecipes().forEach(GameRegistry::addRecipe);
     }
 
     public List<IRecipe> getRecipes() {
         List<IRecipe> list = new ArrayList<>();
-        list.add(new ShapedOreRecipe(EnumSubItems.SWORD_BLADE.getStack(), "i", "i", "b",
-                'i', "ingotIron",
-                'b', new ItemStack(Blocks.IRON_BARS)));
-        list.add(new ShapedOreRecipe(EnumSubItems.GAS_CANISTER.getStack(), " l ", "isi", "ibi",
-                'l', new ItemStack(Blocks.LEVER),
-                'i', "ingotIron",
-                's', "slimeball",
-                'b', new ItemStack(Items.BUCKET)));
-        list.add(new ShapedOreRecipe(EnumSubItems.BLADE_HOLSTER.getStack(), "ibi", "i i", "iii",
-                'i', "ingotIron",
-                'b', new ItemStack(Blocks.IRON_BARS)));
-        list.add(new ShapedOreRecipe(EnumSubItems.BLADE_HOLSTER_ASSEMBLY.getStack(), " g ", "shs", " s ",
-                'g', EnumSubItems.GAS_CANISTER.getStack(),
-                's', new ItemStack(Items.STRING),
-                'h', EnumSubItems.BLADE_HOLSTER.getStack()));
-        list.add(new ShapedOreRecipe(EnumSubItems.BELT.getStack(), " l ", "l l", "lil",
-                'l', new ItemStack(Items.LEATHER),
-                'i', "ingotIron"));
-        list.add(new ShapedOreRecipe(EnumSubItems.GIRDLE.getStack(), "l l", "sjs", "lsl",
-                'l', new ItemStack(net.minecraft.init.Items.LEATHER),
-                's', new ItemStack(Items.STRING),
-                'j', new ItemStack(Items.LEATHER_CHESTPLATE)));
-        list.add(new ShapedOreRecipe(EnumSubItems.GAS_NOZZLE.getStack(), "ibi", "bsb", "ibi",
-                'i', "ingotIron",
-                'b', new ItemStack(Blocks.IRON_BARS),
-                's', new ItemStack(Blocks.IRON_BLOCK)));
-        list.add(new ShapedOreRecipe(EnumSubItems.CABLE_COIL.getStack(), "sss", "sis", "sss",
-                's', new ItemStack(Items.STRING),
-                'i', "ingotIron"));
-        list.add(new ShapedOreRecipe(EnumSubItems.GRAPPLE_LAUNCHER.getStack(), "iii", "sda", "iii",
-                'i', "ingotIron", 's', new ItemStack(Items.STRING),
-                'd', new ItemStack(Blocks.DISPENSER),
-                'a', new ItemStack(Items.ARROW)));
+//        list.add(new ShapedOreRecipe(EnumSubItems.SWORD_BLADE.getStack(), "i", "i", "b",
+//                'i', "ingotIron",
+//                'b', new ItemStack(Blocks.IRON_BARS)));
+//        list.add(new ShapedOreRecipe(EnumSubItems.GAS_CANISTER.getStack(), " l ", "isi", "ibi",
+//                'l', new ItemStack(Blocks.LEVER),
+//                'i', "ingotIron",
+//                's', "slimeball",
+//                'b', new ItemStack(Items.BUCKET)));
+//        list.add(new ShapedOreRecipe(EnumSubItems.BLADE_HOLSTER.getStack(), "ibi", "i i", "iii",
+//                'i', "ingotIron",
+//                'b', new ItemStack(Blocks.IRON_BARS)));
+//        list.add(new ShapedOreRecipe(EnumSubItems.BLADE_HOLSTER_ASSEMBLY.getStack(), " g ", "shs", " s ",
+//                'g', EnumSubItems.GAS_CANISTER.getStack(),
+//                's', new ItemStack(Items.STRING),
+//                'h', EnumSubItems.BLADE_HOLSTER.getStack()));
+//        list.add(new ShapedOreRecipe(EnumSubItems.BELT.getStack(), " l ", "l l", "lil",
+//                'l', new ItemStack(Items.LEATHER),
+//                'i', "ingotIron"));
+//        list.add(new ShapedOreRecipe(EnumSubItems.GIRDLE.getStack(), "l l", "sjs", "lsl",
+//                'l', new ItemStack(net.minecraft.init.Items.LEATHER),
+//                's', new ItemStack(Items.STRING),
+//                'j', new ItemStack(Items.LEATHER_CHESTPLATE)));
+//        list.add(new ShapedOreRecipe(EnumSubItems.GAS_NOZZLE.getStack(), "ibi", "bsb", "ibi",
+//                'i', "ingotIron",
+//                'b', new ItemStack(Blocks.IRON_BARS),
+//                's', new ItemStack(Blocks.IRON_BLOCK)));
+//        list.add(new ShapedOreRecipe(EnumSubItems.CABLE_COIL.getStack(), "sss", "sis", "sss",
+//                's', new ItemStack(Items.STRING),
+//                'i', "ingotIron"));
+//        list.add(new ShapedOreRecipe(EnumSubItems.GRAPPLE_LAUNCHER.getStack(), "iii", "sda", "iii",
+//                'i', "ingotIron", 's', new ItemStack(Items.STRING),
+//                'd', new ItemStack(Blocks.DISPENSER),
+//                'a', new ItemStack(Items.ARROW)));
         return list;
     }
 
@@ -170,7 +175,7 @@ public class ItemResource extends ItemBase implements IRecipeRegister, IItemWith
 
         @SideOnly(Side.CLIENT)
         public ModelResourceLocation getModelResourceLocation() {
-            return new ModelResourceLocation(Reference.MOD_ID.toLowerCase() + ":" + name, "inventory");
+            return new ModelResourceLocation(Tags.MOD_ID.toLowerCase() + ":" + name, "inventory");
         }
 
         public static EnumSubItems getValue(int index) {

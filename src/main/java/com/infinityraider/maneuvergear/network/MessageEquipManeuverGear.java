@@ -1,5 +1,6 @@
 package com.infinityraider.maneuvergear.network;
 
+import baubles.api.cap.IBaublesItemHandler;
 import com.infinityraider.maneuvergear.utility.BaublesWrapper;
 import com.infinityraider.infinitylib.network.MessageBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,13 +27,13 @@ public class MessageEquipManeuverGear extends MessageBase<MessageManeuverGearEqu
 
     @Override
     protected void processMessage(MessageContext ctx) {
-        EntityPlayer player = ctx.getServerHandler().playerEntity;
+        EntityPlayer player = ctx.getServerHandler().player;
         ItemStack stack = player.getHeldItem(this.hand);
-        if (stack != null) {
-            IInventory baubles = BaublesWrapper.getInstance().getBaubles(player);
+        if (!stack.isEmpty()) {
+            IBaublesItemHandler baubles = BaublesWrapper.getInstance().getBaubles(player);
             ItemStack belt = baubles.getStackInSlot(BaublesWrapper.BELT_SLOT);
-            belt = belt == null ? null : belt.copy();
-            baubles.setInventorySlotContents(BaublesWrapper.BELT_SLOT, stack.copy());
+            belt = belt.copy();
+            baubles.setStackInSlot(BaublesWrapper.BELT_SLOT, stack.copy());
             player.inventory.setInventorySlotContents(player.inventory.currentItem, belt);
         }
     }

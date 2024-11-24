@@ -1,7 +1,7 @@
 package com.infinityraider.maneuvergear.gui;
 
+import com.infinityraider.maneuvergear.Tags;
 import com.infinityraider.maneuvergear.handler.ConfigurationHandler;
-import com.infinityraider.maneuvergear.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
@@ -31,12 +31,7 @@ public class GuiFactory implements IModGuiFactory {
 
     @Override
     public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new GuiConfig(parentScreen, Reference.MOD_ID, Reference.MOD_NAME);
-    }
-
-    @Override
-    public Class<? extends GuiScreen> mainConfigGuiClass() {
-        return ManeuverGearGuiConfig.class;
+        return new ManeuverGearGuiConfig(parentScreen);
     }
 
     @Override
@@ -44,14 +39,9 @@ public class GuiFactory implements IModGuiFactory {
         return null;
     }
 
-    @Override
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
-        return null;
-    }
-
     public static class ManeuverGearGuiConfig extends GuiConfig {
         public ManeuverGearGuiConfig(GuiScreen guiScreen) {
-            super(guiScreen,getConfigElements(), Reference.MOD_ID, false, false,
+            super(guiScreen,getConfigElements(), Tags.MOD_ID, false, false,
                     GuiConfig.getAbridgedConfigPath(ConfigurationHandler.getInstance().config.toString()));
         }
 

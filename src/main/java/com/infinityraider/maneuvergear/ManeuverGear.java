@@ -1,5 +1,7 @@
 package com.infinityraider.maneuvergear;
-
+import com.infinityraider.infinitylib.config.IModConfiguration;
+import com.infinityraider.infinitylib.config.ModConfiguration;
+import com.infinityraider.maneuvergear.handler.ConfigurationHandler;
 import com.infinityraider.maneuvergear.init.EntityRegistry;
 import com.infinityraider.maneuvergear.init.ItemRegistry;
 import com.infinityraider.maneuvergear.network.*;
@@ -13,14 +15,14 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 
 @Mod(
-        modid = Reference.MOD_ID,
-        name = Reference.MOD_NAME,
-        version = Reference.VERSION,
+        modid = Tags.MOD_ID,
+        name = Tags.MOD_NAME,
+        version = Tags.VERSION,
         guiFactory = Reference.GUI_FACTORY_CLASS,
         dependencies = "required-after:infinitylib;after:"+ Names.Mods.baubles
 )
 public class ManeuverGear extends InfinityMod {
-    @Mod.Instance(Reference.MOD_ID)
+    @Mod.Instance(Tags.MOD_ID)
     public static ManeuverGear instance;
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
@@ -33,7 +35,12 @@ public class ManeuverGear extends InfinityMod {
 
     @Override
     public String getModId() {
-        return Reference.MOD_ID;
+        return Tags.MOD_ID;
+    }
+
+    @Override
+    public IModConfiguration getConfiguration() {
+        return ModConfiguration.getInstance();
     }
 
     @Override

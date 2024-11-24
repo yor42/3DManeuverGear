@@ -303,7 +303,7 @@ public final class PhysicsEngineClientLocal extends PhysicsEngine {
     @Override
     public void applyBoost() {
         Vec3d look = player.getLookVec();
-        Vector3d boost = (new Vector3d(look.xCoord, look.yCoord, look.zCoord)).mul(BOOST);
+        Vector3d boost = (new Vector3d(look.x, look.y, look.z)).mul(BOOST);
         Vector3d v = calculateVelocity();
         setPlayerVelocity(v.add(boost));
     }

@@ -1,22 +1,22 @@
-eclipse/
-libs/
-.gradle/
-.git/
-build/
-out/
-run/
-*.iml
-*.ipr
-*.iws
-Schematic_to_Java*
-schematics/
-AgriCraft_Dependencies.rar
-.idea/
-logs/
-/bin/
-
+# eclipse
+bin
+*.launch
+.settings
+.metadata
 .classpath
 .project
-.settings/
-dependencies.zip
-*.bak
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run

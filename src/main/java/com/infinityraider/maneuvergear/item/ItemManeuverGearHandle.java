@@ -17,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -37,6 +38,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -150,7 +152,7 @@ public class ItemManeuverGearHandle extends ItemBase implements IDualWieldedWeap
         return stack != null && stack.getItem() instanceof ItemManeuverGearHandle;
     }
 
-    @Override
+    //@Override
     public float getStrVsBlock(ItemStack stack, IBlockState state) {
         Block block = state.getBlock();
         if (block == Blocks.WEB) {
@@ -257,7 +259,7 @@ public class ItemManeuverGearHandle extends ItemBase implements IDualWieldedWeap
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean flag) {
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> list, ITooltipFlag flag) {
         if(stack != null) {
             list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.handle"));
             list.add(TranslationHelper.translateToLocal("3DManeuverGear.ToolTip.damage") + ": " + this.getBladeDamage(stack) + "/" + this.MAX_ITEM_DAMAGE);
@@ -273,18 +275,18 @@ public class ItemManeuverGearHandle extends ItemBase implements IDualWieldedWeap
 
     @Override
     public void registerRecipes() {
-        this.getRecipes().forEach(GameRegistry::addRecipe);
+        //this.getRecipes().forEach(GameRegistry::addRecipe);
     }
-
-    public List<IRecipe> getRecipes() {
-        List<IRecipe> list = new ArrayList<>();
-        list.add(new ShapedOreRecipe(ItemRegistry.getInstance().itemManeuverGearHandle, "ww ", "iib", "wwl",
-                'w', new ItemStack(Blocks.WOOL, 1, OreDictionary.WILDCARD_VALUE),
-                'i', "ingotIron",
-                'b', new ItemStack(Blocks.IRON_BARS),
-                'l', new ItemStack(Blocks.LEVER)));
-        return list;
-    }
+//
+//    public List<IRecipe> getRecipes() {
+//        List<IRecipe> list = new ArrayList<>();
+//        list.add(new ShapedOreRecipe(ItemRegistry.getInstance().itemManeuverGearHandle, "ww ", "iib", "wwl",
+//                'w', new ItemStack(Blocks.WOOL, 1, OreDictionary.WILDCARD_VALUE),
+//                'i', "ingotIron",
+//                'b', new ItemStack(Blocks.IRON_BARS),
+//                'l', new ItemStack(Blocks.LEVER)));
+//        return list;
+//    }
 
     @Override
     @SideOnly(Side.CLIENT)

@@ -1,7 +1,7 @@
 package com.infinityraider.maneuvergear.handler;
 
+import com.infinityraider.maneuvergear.Tags;
 import com.infinityraider.maneuvergear.ManeuverGear;
-import com.infinityraider.maneuvergear.reference.Reference;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -126,11 +126,11 @@ public class ConfigurationHandler {
         }
 
         public String getDescription() {
-            return Reference.MOD_ID + " " + name + " Settings";
+            return Tags.MOD_ID + " " + name + " Settings";
         }
 
         public String getLangKey() {
-            return Reference.MOD_ID.toLowerCase() +".configGui.ctgy." + name;
+            return Tags.MOD_ID.toLowerCase() +".configGui.ctgy." + name;
         }
     }
 

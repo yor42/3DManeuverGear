@@ -5,7 +5,7 @@ import com.infinityraider.maneuvergear.reference.Names;
 import com.infinityraider.infinitylib.entity.EntityRegistryEntry;
 
 public class EntityRegistry {
-    private static EntityRegistry INSTANCE = new EntityRegistry();
+    private static final EntityRegistry INSTANCE = new EntityRegistry();
 
     public static EntityRegistry getInstance() {
         return INSTANCE;

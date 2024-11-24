@@ -1,4 +1,4 @@
-//Items
+
 item.3dmaneuvergear:3d_maneuver_gear.name=3D Maneuver Gear
 item.3dmaneuvergear:3d_maneuver_handle.name=3D Maneuver Gear Hand Grips
 item.3dmaneuvergear:item_component.sword_blade.name=Sword Blade
@@ -13,14 +13,11 @@ item.3dmaneuvergear:item_component.grapple_launcher.name=Grapple Launcher
 item.3dmaneuvergear:item_fall_boots.name=Shock Absorbing Boots
 item.3dmaneuvergear:item_record.name=Music Disc
 
-//Sounds
 item.record.guren_no_yumiya.desc=Linked Horizon - Guren No Yumiya
 
-//Key bindings
 3DManeuverGear.Key.RetractLeft=Retract left cable
 3DManeuverGear.Key.RetractRight=Retract right cable
 
-//Tool tips
 3DManeuverGear.ToolTip.swordBladeLeft=Shift click to put this blade in the left holster
 3DManeuverGear.ToolTip.swordBladeRight=Click to put this blade in the right holster
 3DManeuverGear.ToolTip.belt=Goes into the belt slot
@@ -38,7 +35,6 @@ item.record.guren_no_yumiya.desc=Linked Horizon - Guren No Yumiya
 3DManeuverGear.ToolTip.boots1=These boots are equipped with shock dampers,
 3DManeuverGear.ToolTip.boots2=making it less painful to hit the ground at higher velocities
 
-//Config
 3dmaneuvergear.configGui.ctgy.Numbers.tooltip=Everything related to numbers and math
 3dmaneuvergear.configGui.ctgy.Content.tooltip=Everything related to items (these will require a game restart)
 3dmaneuvergear.configGui.ctgy.Client.tooltip=Client config settings, typically don't require a reboot and don't have to match the server
