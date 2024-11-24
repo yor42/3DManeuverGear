@@ -180,7 +180,13 @@ public class ItemManeuverGear extends ItemBase implements IBauble, IRecipeRegist
         if(!(entity instanceof EntityPlayer)) {
             return;
         }
+
         EntityPlayer player = (EntityPlayer) entity;
+
+        if(stack!=null && stack.getItem()==this && !DartHandler.instance.isWearingGear(player)) {
+            DartHandler.instance.equipGear(player);
+        }
+
         boolean remote = player.getEntityWorld().isRemote;
         if(remote && stack!=null && stack.getItem()==this) {
             boolean isWearingGear = DartHandler.instance.isWearingGear(player);

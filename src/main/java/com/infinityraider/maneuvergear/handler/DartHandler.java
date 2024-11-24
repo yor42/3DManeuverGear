@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
@@ -238,7 +239,7 @@ public class DartHandler {
         unEquipGear(player);
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     @SuppressWarnings("unused")
     public void onEntityJoinWorldEvent(EntityJoinWorldEvent event) {
         if (event.getEntity() != null && event.getEntity() instanceof EntityPlayer) {

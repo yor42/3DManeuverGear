@@ -5,6 +5,7 @@ import com.infinityraider.maneuvergear.network.MessageBoostUsed;
 import com.infinityraider.maneuvergear.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 @SideOnly(Side.CLIENT)
+@Mod.EventBusSubscriber
 public class KeyInputHandler {
     private static final KeyInputHandler INSTANCE = new KeyInputHandler();
 
